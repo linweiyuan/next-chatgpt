@@ -1,4 +1,7 @@
+import React from 'react'
 import {Inter} from 'next/font/google'
+
+import ToasterContext from '@/app/context/ToasterContext'
 
 import './globals.css'
 
@@ -17,7 +20,10 @@ const LoginLayout = (
   }) => {
   return (
     <html lang="en">
-    <body className={inter.className}>{children}</body>
+    <body className={inter.className}>
+    <ToasterContext/>
+    {children}
+    </body>
     </html>
   )
 }
