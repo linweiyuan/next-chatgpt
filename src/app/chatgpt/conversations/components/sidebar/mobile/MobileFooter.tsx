@@ -1,7 +1,7 @@
 'use client'
 
-import Logout from '@/app/chatgpt/components/Logout'
-import MobileItem from '@/app/chatgpt/components/sidebar/mobile/MobileItem'
+import Logout from '@/app/chatgpt/conversations/components/Logout'
+import MobileItem from '@/app/chatgpt/conversations/components/sidebar/mobile/MobileItem'
 import useRoutes from '@/app/hooks/useRoutes'
 
 const MobileFooter = () => {

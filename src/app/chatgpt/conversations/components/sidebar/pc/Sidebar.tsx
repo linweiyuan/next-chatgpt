@@ -3,9 +3,9 @@
 import React from 'react'
 import {useSession} from 'next-auth/react'
 
-import Loading from '@/app/chatgpt/components/Loading'
-import MobileFooter from '@/app/chatgpt/components/sidebar/mobile/MobileFooter'
-import DesktopSidebar from '@/app/chatgpt/components/sidebar/pc/DesktopSidebar'
+import Loading from '@/app/chatgpt/conversations/components/Loading'
+import MobileFooter from '@/app/chatgpt/conversations/components/sidebar/mobile/MobileFooter'
+import DesktopSidebar from '@/app/chatgpt/conversations/components/sidebar/pc/DesktopSidebar'
 
 interface SidebarProps {
   children: React.ReactNode

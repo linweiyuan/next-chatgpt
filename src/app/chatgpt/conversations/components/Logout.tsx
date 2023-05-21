@@ -3,7 +3,7 @@ import {signOut} from 'next-auth/react'
 import clsx from 'clsx'
 import {HiArrowLeftOnRectangle} from 'react-icons/hi2'
 
-import ConfirmDialog from '@/app/chatgpt/components/ConfirmDialog'
+import ConfirmDialog from '@/app/chatgpt/conversations/components/ConfirmDialog'
 
 const Logout = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)

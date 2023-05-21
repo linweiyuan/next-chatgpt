@@ -1,6 +1,7 @@
 import React from 'react'
 
-import Sidebar from '@/app/chatgpt/components/sidebar/pc/Sidebar'
+import ConversationList from '@/app/chatgpt/conversations/components/conversation/ConversationList'
+import Sidebar from '@/app/chatgpt/conversations/components/sidebar/pc/Sidebar'
 
 interface ConversationsLayoutProps {
   children: React.ReactNode
@@ -14,6 +15,7 @@ const ConversationsLayout = (
   return (
     <Sidebar>
       <div className="h-full">
+        <ConversationList/>
         {children}
       </div>
     </Sidebar>

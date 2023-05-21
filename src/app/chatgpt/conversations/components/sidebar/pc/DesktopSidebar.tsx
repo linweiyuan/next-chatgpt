@@ -2,9 +2,9 @@
 
 import {User} from 'next-auth'
 
-import Avatar from '@/app/chatgpt/components/Avatar'
-import Logout from '@/app/chatgpt/components/Logout'
-import DesktopItem from '@/app/chatgpt/components/sidebar/pc/DesktopItem'
+import Avatar from '@/app/chatgpt/conversations/components/Avatar'
+import Logout from '@/app/chatgpt/conversations/components/Logout'
+import DesktopItem from '@/app/chatgpt/conversations/components/sidebar/pc/DesktopItem'
 import useRoutes from '@/app/hooks/useRoutes'
 
 

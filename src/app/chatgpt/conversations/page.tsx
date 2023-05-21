@@ -1,4 +1,4 @@
-import EmptyState from '@/app/chatgpt/components/EmptyState'
+import EmptyState from '@/app/chatgpt/conversations/components/EmptyState'
 
 const ConversationsPage = () => {
   return (
