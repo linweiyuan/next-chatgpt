@@ -4,6 +4,8 @@ import React, {useCallback, useEffect, useState} from 'react'
 
 import ConversationDetailBody from '@/app/chatgpt/conversations/[conversationId]/components/ConversationDetailBody'
 import ConversationDetailHeader from '@/app/chatgpt/conversations/[conversationId]/components/ConversationDetailHeader'
+import ConversationDetailSubmitForm
+  from '@/app/chatgpt/conversations/[conversationId]/components/ConversationDetailSubmitForm'
 import {ConversationMapping, Message} from '@/app/chatgpt/conversations/components/conversation/ConversationList'
 import Loading from '@/app/chatgpt/conversations/components/Loading'
 import useConversation from '@/app/hooks/useConversation'
@@ -13,7 +15,8 @@ import hljs from '@/app/utils/highlight'
 const ConversationIdPage = () => {
   const {conversationId} = useConversation()
   const [messages, setMessages] = useState<Message[]>([])
-  const [highlight, setHighlight] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [currentNode, setCurrentNode] = useState('')
 
   const handleConversationDetail = useCallback((mapping: Record<string, ConversationMapping>, id: string) => {
       const conversationMapping = mapping[id]
@@ -30,11 +33,25 @@ const ConversationIdPage = () => {
     []
   )
 
+  const addMessage = (message: Message) => {
+    setMessages((oldMessages) => [...oldMessages, message])
+  }
+
+  const updateLastMessage = (message: Message) => {
+    setMessages((oldMessages) => {
+      const lastMessage = oldMessages[oldMessages.length - 1]
+      lastMessage.content.parts[0] = message.content.parts[0]
+      lastMessage.create_time = message.create_time
+
+      return [...oldMessages]
+    })
+  }
+
   useEffect(() => {
-    if (highlight) {
+    if (!isLoading) {
       hljs.highlightAll()
     }
-  }, [highlight])
+  }, [isLoading])
 
   const [{data, loading, error}] = useAxios(
     `/chatgpt/conversation/${conversationId}`
@@ -44,8 +61,9 @@ const ConversationIdPage = () => {
     if (!loading && data) {
       const mapping: Record<string, ConversationMapping> = data.mapping
       const currentNode: string = data.current_node
+      setCurrentNode(currentNode)
       handleConversationDetail(mapping, currentNode)
-      setHighlight(true)
+      setIsLoading(false)
     }
   }, [loading, data, handleConversationDetail])
 
@@ -70,6 +88,14 @@ const ConversationIdPage = () => {
       <div className="h-full flex flex-col">
         <ConversationDetailHeader conversation={data}/>
         <ConversationDetailBody messages={messages}/>
+        <ConversationDetailSubmitForm
+          currentNode={currentNode}
+          setCurrentNode={setCurrentNode}
+          addMessage={addMessage}
+          updateLastMessage={updateLastMessage}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </div>
     </div>
   )
