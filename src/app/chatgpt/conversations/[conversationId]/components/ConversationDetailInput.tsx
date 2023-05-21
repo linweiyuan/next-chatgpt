@@ -5,7 +5,7 @@ import {FieldValues, UseFormRegister} from 'react-hook-form'
 interface ConversationDetailInputProps {
   id: string
   required?: boolean
-  placeholder?: string
+  placeholder: string
   register: UseFormRegister<FieldValues>,
   disabled: boolean
 }

@@ -150,7 +150,7 @@ const ConversationDetailSubmitForm = (
         <ConversationDetailInput
           id="message"
           required
-          placeholder="Write something..."
+          placeholder={isLoading ? 'Now loading...' : 'Write something...'}
           register={register}
           disabled={isLoading}
         />
