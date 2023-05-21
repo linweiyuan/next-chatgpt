@@ -1,6 +1,7 @@
 import React from 'react'
 import {Inter} from 'next/font/google'
 
+import AuthContext from '@/app/context/AuthContext'
 import ToasterContext from '@/app/context/ToasterContext'
 
 import './globals.css'
@@ -21,8 +22,10 @@ const LoginLayout = (
   return (
     <html lang="en">
     <body className={inter.className}>
-    <ToasterContext/>
-    {children}
+    <AuthContext>
+      <ToasterContext/>
+      {children}
+    </AuthContext>
     </body>
     </html>
   )

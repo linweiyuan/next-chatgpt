@@ -1,7 +1,8 @@
 'use client'
 
-import React, {useState} from 'react'
-import {signIn} from 'next-auth/react'
+import React, {useEffect, useState} from 'react'
+import {useRouter} from 'next/navigation'
+import {signIn, useSession} from 'next-auth/react'
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form'
 import {toast} from 'react-hot-toast'
 import {BsGoogle, BsMicrosoft} from 'react-icons/all'
@@ -13,6 +14,15 @@ import SocialLoginButton from '@/app/components/SocialLoginButton'
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const router = useRouter()
+  const session = useSession()
+
+  useEffect(() => {
+    if (session?.status === 'authenticated') {
+      router.push('/chatgpt/conversations')
+    }
+  }, [session?.status, router])
 
   const {
     register,
@@ -40,6 +50,7 @@ const LoginForm = () => {
       if (callback?.ok) {
         setError('')
         toast.success('Logged in.')
+        router.push('/chatgpt/conversations')
       }
     }).finally(() => setIsLoading(false))
   }
