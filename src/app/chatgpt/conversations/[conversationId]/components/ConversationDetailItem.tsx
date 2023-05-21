@@ -19,7 +19,7 @@ const ConversationDetailItem = (
   const body = clsx('flex flex-col gap-2', isOwn && 'items-end')
   const messageCSS = clsx(
     'text-sm w-fit overflow-hidden rounded-md rounded-full py-2 px-3',
-    isOwn ? 'bg-sky-500 text-white ' : 'bg-sky-100'
+    isOwn ? 'bg-sky-500 text-white' : 'bg-sky-100'
   )
 
   return (
