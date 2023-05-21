@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation'
 import {signIn, useSession} from 'next-auth/react'
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form'
 import {toast} from 'react-hot-toast'
-import {BsGoogle, BsMicrosoft} from 'react-icons/all'
+import {BsGoogle, BsMicrosoft} from 'react-icons/bs'
 
 import Button from '@/app/components/Button'
 import InputField from '@/app/components/InputField'

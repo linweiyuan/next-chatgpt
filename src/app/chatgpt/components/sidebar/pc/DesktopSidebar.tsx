@@ -3,6 +3,7 @@
 import {User} from 'next-auth'
 
 import Avatar from '@/app/chatgpt/components/Avatar'
+import Logout from '@/app/chatgpt/components/Logout'
 import DesktopItem from '@/app/chatgpt/components/sidebar/pc/DesktopItem'
 import useRoutes from '@/app/hooks/useRoutes'
 
@@ -32,6 +33,8 @@ const DesktopSidebar = (
                 active={item.active}
               />
             ))}
+
+            <li><Logout/></li>
           </ul>
         </nav>
         <nav className="mt-4 flex flex-col justify-between items-center">
