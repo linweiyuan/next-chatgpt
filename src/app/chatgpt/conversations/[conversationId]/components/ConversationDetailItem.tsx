@@ -1,5 +1,6 @@
 import {useSession} from 'next-auth/react'
 import clsx from 'clsx'
+import ReactMarkdown from 'react-markdown'
 
 import Avatar from '@/app/chatgpt/conversations/components/Avatar'
 import {ConversationMapping} from '@/app/chatgpt/conversations/components/conversation/ConversationList'
@@ -35,7 +36,7 @@ const ConversationDetailItem = (
           </div>
         </div>
         <div className={messageCSS}>
-          {message.content.parts[0]}
+          <ReactMarkdown>{message.content.parts[0]}</ReactMarkdown>
         </div>
       </div>
     </div>

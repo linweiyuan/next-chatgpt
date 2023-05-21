@@ -8,10 +8,12 @@ import {ConversationMapping, Message} from '@/app/chatgpt/conversations/componen
 import Loading from '@/app/chatgpt/conversations/components/Loading'
 import useConversation from '@/app/hooks/useConversation'
 import {useAxios} from '@/app/utils/axios'
+import hljs from '@/app/utils/highlight'
 
 const ConversationIdPage = () => {
   const {conversationId} = useConversation()
   const [messages, setMessages] = useState<Message[]>([])
+  const [highlight, setHighlight] = useState(false)
 
   const handleConversationDetail = useCallback((mapping: Record<string, ConversationMapping>, id: string) => {
       const conversationMapping = mapping[id]
@@ -28,6 +30,12 @@ const ConversationIdPage = () => {
     []
   )
 
+  useEffect(() => {
+    if (highlight) {
+      hljs.highlightAll()
+    }
+  }, [highlight])
+
   const [{data, loading, error}] = useAxios(
     `/chatgpt/conversation/${conversationId}`
   )
@@ -37,6 +45,7 @@ const ConversationIdPage = () => {
       const mapping: Record<string, ConversationMapping> = data.mapping
       const currentNode: string = data.current_node
       handleConversationDetail(mapping, currentNode)
+      setHighlight(true)
     }
   }, [loading, data, handleConversationDetail])
 

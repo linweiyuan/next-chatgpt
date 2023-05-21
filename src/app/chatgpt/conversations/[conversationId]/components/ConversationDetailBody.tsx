@@ -15,7 +15,6 @@ const ConversationDetailBody = (
     messages,
   }: ConversationDetailBodyProps
 ) => {
-  console.log(messages)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   const {conversationId} = useConversation()
