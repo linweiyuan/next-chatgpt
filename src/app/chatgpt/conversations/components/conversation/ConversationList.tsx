@@ -3,8 +3,9 @@
 import React from 'react'
 import clsx from 'clsx'
 
-import ConversationBox from '@/app/chatgpt/conversations/components/conversation/ConversationBox'
+import ConversationListItem from '@/app/chatgpt/conversations/components/conversation/ConversationListItem'
 import Loading from '@/app/chatgpt/conversations/components/Loading'
+import useConversation from '@/app/hooks/useConversation'
 import {useAxios} from '@/app/utils/axios'
 
 export interface Conversation {
@@ -43,6 +44,8 @@ export interface Content {
 }
 
 const ConversationList = () => {
+  const {conversationId, isConversationOpened} = useConversation()
+
   const [{data, loading, error}] = useAxios('/chatgpt/conversations?limit=100')
   if (loading) {
     return <Loading/>
@@ -55,6 +58,7 @@ const ConversationList = () => {
   return (
     <aside className={clsx(
       'fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r border-gray-200',
+      isConversationOpened ? 'hidden' : 'block w-full left-0'
     )}
     >
       <div className='px-5'>
@@ -62,9 +66,10 @@ const ConversationList = () => {
           Conversations
         </div>
         {data.items.map((item: Conversation) => (
-          <ConversationBox
+          <ConversationListItem
             key={item.id}
             data={item}
+            selected={item.id === conversationId}
           />
         ))}
       </div>
