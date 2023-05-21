@@ -26,7 +26,7 @@ const ConversationDetailHeader = (
       <ConversationDetailHeaderDrawer
         isOpen={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        data={conversation}
+        conversation={conversation}
       />
 
       <div

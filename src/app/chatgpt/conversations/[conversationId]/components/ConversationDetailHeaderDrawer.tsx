@@ -1,25 +1,57 @@
 'use client'
 
-import {Fragment} from 'react'
-import {IoClose} from 'react-icons/io5'
+import {Fragment, useCallback, useState} from 'react'
+import {useRouter} from 'next/navigation'
+import {IoClose, IoTrash} from 'react-icons/io5'
 
+import ConfirmDialog from '@/app/chatgpt/conversations/components/ConfirmDialog'
 import {Conversation} from '@/app/chatgpt/conversations/components/conversation/ConversationList'
+import useConversation from '@/app/hooks/useConversation'
+import {axios} from '@/app/utils/axios'
 import {formatTime} from '@/app/utils/formatter'
 import {Dialog, Transition} from '@headlessui/react'
 
 interface ProfileDrawerProps {
   isOpen: boolean
   onClose: () => void
-  data: Conversation
+  conversation: Conversation
 }
 
-const ConversationDetailHeaderDrawer = ({isOpen, onClose, data}: ProfileDrawerProps) => {
-  const onDrawerClose = () => {
-    onClose()
-  }
+const ConversationDetailHeaderDrawer = (
+  {
+    isOpen,
+    onClose,
+    conversation,
+  }: ProfileDrawerProps
+) => {
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const router = useRouter()
+  const {conversationId} = useConversation()
+
+  const onDelete = useCallback(() => {
+    axios.patch(`/chatgpt/conversation/${conversationId}`, {
+      'is_visible': false,
+    }).then(() => {
+      onClose()
+      router.push('/chatgpt/conversations')
+    }).finally(() => {
+      // // a wired way to force it to reload data instead of useEffect
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
+    })
+  }, [router, conversationId, onClose])
 
   return (
     <>
+      <ConfirmDialog
+        title={'Delete conversation'}
+        content={'Are you sure you want to delete this conversation?'}
+        isOpen={confirmOpen}
+        onYes={onDelete}
+        onNo={() => setConfirmOpen(false)}
+      />
+
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
@@ -53,7 +85,7 @@ const ConversationDetailHeaderDrawer = ({isOpen, onClose, data}: ProfileDrawerPr
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                              onClick={onDrawerClose}>
+                              onClick={onClose}>
                               <IoClose size={24} aria-hidden="true"/>
                             </button>
                           </div>
@@ -61,10 +93,22 @@ const ConversationDetailHeaderDrawer = ({isOpen, onClose, data}: ProfileDrawerPr
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         <div className="flex flex-col items-center space-y-10">
-                          <div>{data.title}</div>
-                          <div>{formatTime(data.create_time)}</div>
+                          <div>{conversation.title}</div>
+                          <div>{formatTime(conversation.create_time)}</div>
                           {/*remove one empty message and one system messages*/}
-                          <div>Total {Object.keys(data.mapping).length - 2} messages</div>
+                          <div>Total {Object.keys(conversation.mapping).length - 2} messages</div>
+                          <div className="flex gap-10 my-8">
+                            <div className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75"
+                                 onClick={() => setConfirmOpen(true)}>
+                              <div
+                                className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
+                                <IoTrash size={20}/>
+                              </div>
+                              <div className="text-sm font-light text-neutral-600">
+                                Delete
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
