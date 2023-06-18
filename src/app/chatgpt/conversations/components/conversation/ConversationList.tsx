@@ -48,7 +48,7 @@ export interface Content {
 const ConversationList = () => {
   const {conversationId, isConversationOpened} = useConversation()
 
-  const [{data, loading, error}] = useAxios('/chatgpt/conversations?limit=100')
+  const [{data, loading, error}] = useAxios('/chatgpt/backend-api/conversations?limit=100')
   if (loading) {
     return <Loading/>
   }

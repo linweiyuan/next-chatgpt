@@ -64,9 +64,9 @@ const ConversationDetailSubmitForm = (
       ],
       conversation_id: conversationId,
       parent_message_id: currentNode,
-      model: 'text-davinci-002-render-sha-mobile',
+      model: 'gpt-4',
       timezone_offset_min: -480,
-      history_and_training_disabled: true,
+      history_and_training_disabled: false,
     }
 
     setValue('message', '', {shouldValidate: true})
@@ -96,7 +96,7 @@ const ConversationDetailSubmitForm = (
     }
     addMessage(responseMessageTemplate)
 
-    fetch(`${process.env.GO_CHATGPT_API_URL}/chatgpt/conversation`, {
+    fetch(`${process.env.GO_CHATGPT_API_URL}/chatgpt/backend-api/conversation`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

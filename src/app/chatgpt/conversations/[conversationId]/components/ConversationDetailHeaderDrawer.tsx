@@ -29,7 +29,7 @@ const ConversationDetailHeaderDrawer = (
   const {conversationId} = useConversation()
 
   const onDelete = useCallback(() => {
-    axios.patch(`/chatgpt/conversation/${conversationId}`, {
+    axios.patch(`/chatgpt/backend-api/conversation/${conversationId}`, {
       'is_visible': false,
     }).then(() => {
       onClose()

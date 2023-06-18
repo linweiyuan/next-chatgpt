@@ -54,7 +54,7 @@ const ConversationIdPage = () => {
   }, [isLoading])
 
   const [{data, loading, error}] = useAxios(
-    `/chatgpt/conversation/${conversationId}`
+    `/chatgpt/backend-api/conversation/${conversationId}`
   )
 
   useEffect(() => {
