@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 
 import {axios} from '@/app/utils/axios'
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
